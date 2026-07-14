@@ -59,8 +59,8 @@ try {
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $formatted = array_map(function($row) {
-        $assegnazioni = (int)$row['numeroAssegnazioni'];
-        $completamenti = (int)$row['numeroCompletamenti'];
+        $assegnazioni = (int)($row['numeroassegnazioni'] ?? 0);
+        $completamenti = (int)($row['numerocompletamenti'] ?? 0);
         $percentuale = $assegnazioni > 0 ? round(($completamenti / $assegnazioni) * 100, 2) : 0;
         
         return [
@@ -75,5 +75,5 @@ try {
     echo json_encode(['success' => true, 'data' => $formatted]);
 } catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Errore del server.']);
+    echo json_encode(['success' => false, 'message' => 'Errore del server: ' . $e->getMessage()]);
 }
