@@ -65,7 +65,7 @@ try {
         exit;
     }
 
-    $stmt = $pdo->prepare('INSERT INTO assegnazioni (corso_id, utente_id, data_assegnazione, data_scadenza, stato) VALUES (:corso_id, :utente_id, CURRENT_DATE(), :data_scadenza, "Assegnato")');
+    $stmt = $pdo->prepare("INSERT INTO assegnazioni (corso_id, utente_id, data_assegnazione, data_scadenza, stato) VALUES (:corso_id, :utente_id, CURRENT_DATE, :data_scadenza, 'Assegnato')");
     $stmt->execute([
         'corso_id'      => $corso_id,
         'utente_id'     => $utente_id,
@@ -75,5 +75,5 @@ try {
     echo json_encode(['success' => true, 'message' => 'Assegnazione creata con successo.']);
 } catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Errore del server.']);
+    echo json_encode(['success' => false, 'message' => 'Errore del server: ' . $e->getMessage()]);
 }
