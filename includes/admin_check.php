@@ -6,7 +6,7 @@
 // riservate solo agli amministratori.
 // ============================================
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'referente') {
     header('Location: dashboard.php');
     exit;
 }

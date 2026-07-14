@@ -4,94 +4,115 @@ require_once __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../includes/auth_check.php';
 require_once __DIR__ . '/../config/database.php';
 
-// Recupera statistiche
 $pdo = getConnection();
 $userId = $_SESSION['user_id'];
+$role = $_SESSION['role'];
 
-// Conteggio todos dell'utente
-$stmt = $pdo->prepare('SELECT COUNT(*) as total, SUM(completed) as completed FROM todos WHERE user_id = :user_id');
-$stmt->execute(['user_id' => $userId]);
-$todoStats = $stmt->fetch();
+// Statistiche Dipendente
+$totCorsiAssegnati = 0;
+$totCorsiCompletati = 0;
+$totCorsiScaduti = 0;
 
-$totalTodos     = (int)($todoStats['total'] ?? 0);
-$completedTodos = (int)($todoStats['completed'] ?? 0);
-$pendingTodos   = $totalTodos - $completedTodos;
-
-// Statistiche aggiuntive per admin
-if ($isAdmin) {
-    $stmt = $pdo->query('SELECT COUNT(*) as total FROM users');
-    $totalUsers = (int)$stmt->fetch()['total'];
-
-    $stmt = $pdo->query('SELECT COUNT(*) as total FROM todos');
-    $totalAllTodos = (int)$stmt->fetch()['total'];
+if ($role === 'dipendente') {
+    $stmt = $pdo->prepare("SELECT COUNT(*) as total, SUM(IF(stato = 'Completato', 1, 0)) as completati, SUM(IF(stato = 'Scaduto', 1, 0)) as scaduti FROM assegnazioni WHERE utente_id = :user_id");
+    $stmt->execute(['user_id' => $userId]);
+    $stats = $stmt->fetch();
+    $totCorsiAssegnati = (int)($stats['total'] ?? 0);
+    $totCorsiCompletati = (int)($stats['completati'] ?? 0);
+    $totCorsiScaduti = (int)($stats['scaduti'] ?? 0);
 }
 
-// Saluto basato sull'ora
+// Statistiche Referente
+$totCorsiCatalogo = 0;
+$totAssegnazioni = 0;
+$totDipendenti = 0;
+
+if ($role === 'referente') {
+    $totCorsiCatalogo = (int)$pdo->query("SELECT COUNT(*) as total FROM corsi")->fetch()['total'];
+    $totAssegnazioni = (int)$pdo->query("SELECT COUNT(*) as total FROM assegnazioni")->fetch()['total'];
+    $totDipendenti = (int)$pdo->query("SELECT COUNT(*) as total FROM users WHERE role = 'dipendente'")->fetch()['total'];
+}
+
 $hour = (int)date('H');
 if ($hour < 12) $greeting = 'Buongiorno';
 elseif ($hour < 18) $greeting = 'Buon pomeriggio';
 else $greeting = 'Buonasera';
 ?>
 
-<!-- Welcome Section -->
 <div class="welcome-section">
-    <h1><?php echo $greeting; ?>, <?php echo htmlspecialchars($username); ?>! 👋</h1>
-    <p>Ecco un riepilogo della tua attività</p>
-    <?php if ($isAdmin): ?>
-    <span class="role-indicator admin">🛡️ Accesso Amministratore</span>
+    <h1><?php echo $greeting; ?>, <?php echo htmlspecialchars($fullName); ?>! 👋</h1>
+    <p>Benvenuto nell'Academy Aziendale.</p>
+    <?php if ($role === 'referente'): ?>
+    <span class="role-indicator admin">🛡️ Accesso Referente Academy</span>
     <?php else: ?>
-    <span class="role-indicator user">👤 Account Utente</span>
+    <span class="role-indicator user">👤 Accesso Dipendente</span>
     <?php endif; ?>
 </div>
 
-<!-- Statistiche -->
 <div class="stats-grid">
-    <div class="stat-card">
-        <div class="stat-icon primary">📋</div>
-        <div class="stat-value"><?php echo $totalTodos; ?></div>
-        <div class="stat-label">Todos Totali</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-icon success">✅</div>
-        <div class="stat-value"><?php echo $completedTodos; ?></div>
-        <div class="stat-label">Completati</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-icon warning">⏳</div>
-        <div class="stat-value"><?php echo $pendingTodos; ?></div>
-        <div class="stat-label">In Attesa</div>
-    </div>
-    <?php if ($isAdmin): ?>
-    <div class="stat-card">
-        <div class="stat-icon info">👥</div>
-        <div class="stat-value"><?php echo $totalUsers; ?></div>
-        <div class="stat-label">Utenti Registrati</div>
-    </div>
+    <?php if ($role === 'dipendente'): ?>
+        <div class="stat-card">
+            <div class="stat-icon primary">📚</div>
+            <div class="stat-value"><?php echo $totCorsiAssegnati; ?></div>
+            <div class="stat-label">Corsi Assegnati Totali</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon success">✅</div>
+            <div class="stat-value"><?php echo $totCorsiCompletati; ?></div>
+            <div class="stat-label">Corsi Completati</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon warning">⏳</div>
+            <div class="stat-value"><?php echo $totCorsiAssegnati - $totCorsiCompletati; ?></div>
+            <div class="stat-label">Da Completare</div>
+        </div>
+    <?php elseif ($role === 'referente'): ?>
+        <div class="stat-card">
+            <div class="stat-icon primary">📖</div>
+            <div class="stat-value"><?php echo $totCorsiCatalogo; ?></div>
+            <div class="stat-label">Corsi a Catalogo</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon info">👥</div>
+            <div class="stat-value"><?php echo $totAssegnazioni; ?></div>
+            <div class="stat-label">Assegnazioni Effettuate</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon success">👤</div>
+            <div class="stat-value"><?php echo $totDipendenti; ?></div>
+            <div class="stat-label">Dipendenti Iscritti</div>
+        </div>
     <?php endif; ?>
 </div>
 
-<!-- Azioni Rapide -->
-<div class="page-header">
+<div class="page-header mt-8">
     <h1>Azioni Rapide</h1>
-    <p>Accedi velocemente alle funzionalità principali</p>
 </div>
 
 <div class="quick-actions">
-    <a href="todos.php" class="action-card">
-        <div class="action-icon primary">✅</div>
-        <div class="action-text">
-            <h3>Gestisci To-Do</h3>
-            <p>Crea, modifica ed elimina le tue attività</p>
-        </div>
-    </a>
-    <?php if ($isAdmin): ?>
-    <a href="admin.php" class="action-card">
-        <div class="action-icon admin-icon">⚙️</div>
-        <div class="action-text">
-            <h3>Pannello Admin</h3>
-            <p>Gestisci utenti e ruoli del sistema</p>
-        </div>
-    </a>
+    <?php if ($role === 'dipendente'): ?>
+        <a href="miei_corsi.php" class="action-card">
+            <div class="action-icon primary">📚</div>
+            <div class="action-text">
+                <h3>I Miei Corsi</h3>
+                <p>Visualizza e completa i corsi che ti sono stati assegnati.</p>
+            </div>
+        </a>
+    <?php elseif ($role === 'referente'): ?>
+        <a href="admin_corsi.php" class="action-card">
+            <div class="action-icon primary">📖</div>
+            <div class="action-text">
+                <h3>Gestione Catalogo</h3>
+                <p>Aggiungi, modifica o disattiva i corsi dell'Academy.</p>
+            </div>
+        </a>
+        <a href="admin_assegnazioni.php" class="action-card">
+            <div class="action-icon warning">👥</div>
+            <div class="action-text">
+                <h3>Assegna Corsi</h3>
+                <p>Gestisci l'assegnazione dei corsi ai dipendenti.</p>
+            </div>
+        </a>
     <?php endif; ?>
 </div>
 
