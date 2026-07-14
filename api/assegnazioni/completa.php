@@ -58,11 +58,11 @@ try {
     }
 
     // Aggiorna stato e data
-    $updateStmt = $pdo->prepare('UPDATE assegnazioni SET stato = "Completato", data_completamento = CURRENT_DATE() WHERE id = :id');
+    $updateStmt = $pdo->prepare("UPDATE assegnazioni SET stato = 'Completato', data_completamento = CURRENT_DATE WHERE id = :id");
     $updateStmt->execute(['id' => $id]);
 
     echo json_encode(['success' => true, 'message' => 'Corso completato!']);
 } catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Errore del server.']);
+    echo json_encode(['success' => false, 'message' => 'Errore del server: ' . $e->getMessage()]);
 }

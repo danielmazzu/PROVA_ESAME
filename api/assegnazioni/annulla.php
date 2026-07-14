@@ -49,11 +49,11 @@ try {
     }
 
     // Aggiorna stato
-    $updateStmt = $pdo->prepare('UPDATE assegnazioni SET stato = "Annullato" WHERE id = :id');
+    $updateStmt = $pdo->prepare("UPDATE assegnazioni SET stato = 'Annullato' WHERE id = :id");
     $updateStmt->execute(['id' => $id]);
 
     echo json_encode(['success' => true, 'message' => 'Assegnazione annullata.']);
 } catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Errore del server.']);
+    echo json_encode(['success' => false, 'message' => 'Errore del server: ' . $e->getMessage()]);
 }
