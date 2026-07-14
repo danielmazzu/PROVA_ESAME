@@ -1,7 +1,10 @@
 <?php
 // ============================================
 // API: Annulla Assegnazione
-// PUT /api/assegnazioni/annulla.php?id={id}
+// Endpoint: PUT /api/assegnazioni/annulla.php?id={id}
+// Scopo: Annulla un'assegnazione cambiandone lo stato in "Annullato".
+//        Non si puo' annullare un'assegnazione gia' completata.
+//        Solo i referenti possono annullare le assegnazioni.
 // ============================================
 
 header('Content-Type: application/json');
@@ -9,18 +12,21 @@ require_once __DIR__ . '/../../config/database.php';
 
 session_start();
 
+// Controllo autorizzazione: solo i referenti possono annullare le assegnazioni
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'referente') {
     http_response_code(403);
     echo json_encode(['success' => false, 'message' => 'Accesso negato. Solo i referenti possono annullare le assegnazioni.']);
     exit;
 }
 
+// Accetta solo richieste PUT
 if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']);
     exit;
 }
 
+// Recupera l'ID dell'assegnazione dalla query string
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 if ($id <= 0) {
     http_response_code(400);
@@ -31,7 +37,7 @@ if ($id <= 0) {
 try {
     $pdo = getConnection();
     
-    // Controlla l'esistenza dell'assegnazione
+    // Verifica che l'assegnazione esista e recupera il suo stato attuale
     $stmt = $pdo->prepare('SELECT stato FROM assegnazioni WHERE id = :id');
     $stmt->execute(['id' => $id]);
     $assegnazione = $stmt->fetch();
@@ -42,13 +48,15 @@ try {
         exit;
     }
 
+    // REGOLA DI BUSINESS: un corso gia' completato non puo' essere annullato
+    // (il dipendente ha gia' terminato la formazione, lo storico va preservato)
     if ($assegnazione['stato'] === 'Completato') {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Impossibile annullare un\'assegnazione già completata.']);
         exit;
     }
 
-    // Aggiorna stato
+    // Aggiorna lo stato a "Annullato"
     $updateStmt = $pdo->prepare("UPDATE assegnazioni SET stato = 'Annullato' WHERE id = :id");
     $updateStmt->execute(['id' => $id]);
 
