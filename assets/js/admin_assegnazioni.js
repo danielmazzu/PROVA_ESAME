@@ -82,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Modal per creare con select per dipendenti e corsi
     async function openModalCreate() {
+        if (document.querySelector('.modal-backdrop')) return;
         let corsiOptions = '<option value="">Seleziona un corso...</option>';
         let utentiOptions = '<option value="">Seleziona un dipendente...</option>';
 
@@ -141,15 +142,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeModal = () => backdrop.remove();
         backdrop.querySelectorAll('[data-dismiss="modal"]').forEach(el => el.addEventListener('click', closeModal));
 
-        const btnSalva = document.getElementById('btn-salva-assegnazione');
+        const btnSalva = backdrop.querySelector('#btn-salva-assegnazione');
         btnSalva.addEventListener('click', async () => {
             btnSalva.disabled = true;
             btnSalva.textContent = 'Salvataggio...';
 
             const payload = {
-                corso_id: document.getElementById('a-corso').value,
-                utente_id: document.getElementById('a-utente').value,
-                data_scadenza: document.getElementById('a-scadenza').value
+                corso_id: backdrop.querySelector('#a-corso').value,
+                utente_id: backdrop.querySelector('#a-utente').value,
+                data_scadenza: backdrop.querySelector('#a-scadenza').value
             };
 
             if (!payload.corso_id || !payload.utente_id || !payload.data_scadenza) {
@@ -173,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openModalUpdateScadenza(id) {
+        if (document.querySelector('.modal-backdrop')) return;
         const backdrop = document.createElement('div');
         backdrop.className = 'modal-backdrop';
         backdrop.innerHTML = `
@@ -198,13 +200,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeModal = () => backdrop.remove();
         backdrop.querySelectorAll('[data-dismiss="modal"]').forEach(el => el.addEventListener('click', closeModal));
 
-        const btnSalvaScadenza = document.getElementById('btn-salva-scadenza');
+        const btnSalvaScadenza = backdrop.querySelector('#btn-salva-scadenza');
         btnSalvaScadenza.addEventListener('click', async () => {
             btnSalvaScadenza.disabled = true;
             btnSalvaScadenza.textContent = 'Salvataggio...';
             try {
                 await api.put(`../api/assegnazioni/update.php?id=${id}`, {
-                    data_scadenza: document.getElementById('a-up-scadenza').value
+                    data_scadenza: backdrop.querySelector('#a-up-scadenza').value
                 });
                 showAlert(alerts, 'Scadenza aggiornata!', 'success');
                 closeModal();

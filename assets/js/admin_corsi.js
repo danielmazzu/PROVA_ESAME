@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openCorsoModal(id = null) {
+        if (document.querySelector('.modal-backdrop')) return;
         let corso = null;
         if (id) {
             corso = corsi.find(c => c.id == id);
@@ -125,12 +126,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeModal = () => backdrop.remove();
         backdrop.querySelectorAll('[data-dismiss="modal"]').forEach(el => el.addEventListener('click', closeModal));
         
-        document.getElementById('btn-salva-corso').addEventListener('click', async () => {
+        backdrop.querySelector('#btn-salva-corso').addEventListener('click', async () => {
             const payload = {
-                titolo: document.getElementById('c-titolo').value,
-                categoria: document.getElementById('c-categoria').value,
-                durata_ore: document.getElementById('c-durata').value,
-                descrizione: document.getElementById('c-descrizione').value
+                titolo: backdrop.querySelector('#c-titolo').value,
+                categoria: backdrop.querySelector('#c-categoria').value,
+                durata_ore: backdrop.querySelector('#c-durata').value,
+                descrizione: backdrop.querySelector('#c-descrizione').value
             };
 
             try {
