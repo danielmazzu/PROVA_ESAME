@@ -52,7 +52,7 @@ function getConnection(): PDO
             $pdo = new PDO($dsn, $user, $pass, $options);
         } catch (PDOException $e) {
             http_response_code(500);
-            echo json_encode(['success' => false, 'message' => 'Errore di connessione al database.', 'details' => $e->getMessage()]);
+            echo json_encode(['success' => false, 'message' => 'Errore DB: ' . $e->getMessage()]);
             exit;
         }
     }

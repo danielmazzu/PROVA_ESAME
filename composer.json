@@ -1,0 +1,11 @@
+{
+    "name": "danielmazzu/prova_esame",
+    "description": "Academy Aziendale - Esame",
+    "type": "project",
+    "require": {
+        "php": ">=8.0",
+        "ext-pdo": "*",
+        "ext-pdo_pgsql": "*",
+        "ext-pgsql": "*"
+    }
+}
