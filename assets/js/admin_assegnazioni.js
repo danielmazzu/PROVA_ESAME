@@ -141,7 +141,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeModal = () => backdrop.remove();
         backdrop.querySelectorAll('[data-dismiss="modal"]').forEach(el => el.addEventListener('click', closeModal));
         
-        document.getElementById('btn-salva-assegnazione').addEventListener('click', async () => {
+        const btnSalva = document.getElementById('btn-salva-assegnazione');
+        btnSalva.addEventListener('click', async () => {
+            btnSalva.disabled = true;
+            btnSalva.textContent = 'Salvataggio...';
+
             const payload = {
                 corso_id: document.getElementById('a-corso').value,
                 utente_id: document.getElementById('a-utente').value,
@@ -150,6 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!payload.corso_id || !payload.utente_id || !payload.data_scadenza) {
                 alert("Compila tutti i campi!");
+                btnSalva.disabled = false;
+                btnSalva.textContent = 'Salva';
                 return;
             }
 
@@ -160,6 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadAssegnazioni();
             } catch (error) {
                 alert(error.message);
+                btnSalva.disabled = false;
+                btnSalva.textContent = 'Salva';
             }
         });
     }
@@ -190,7 +198,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeModal = () => backdrop.remove();
         backdrop.querySelectorAll('[data-dismiss="modal"]').forEach(el => el.addEventListener('click', closeModal));
         
-        document.getElementById('btn-salva-scadenza').addEventListener('click', async () => {
+        const btnSalvaScadenza = document.getElementById('btn-salva-scadenza');
+        btnSalvaScadenza.addEventListener('click', async () => {
+            btnSalvaScadenza.disabled = true;
+            btnSalvaScadenza.textContent = 'Salvataggio...';
             try {
                 await api.put(`../api/assegnazioni/update.php?id=${id}`, {
                     data_scadenza: document.getElementById('a-up-scadenza').value
@@ -200,6 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadAssegnazioni();
             } catch (error) {
                 alert(error.message);
+                btnSalvaScadenza.disabled = false;
+                btnSalvaScadenza.textContent = 'Salva';
             }
         });
     }
