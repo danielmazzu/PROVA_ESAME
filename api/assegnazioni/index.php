@@ -51,7 +51,7 @@ try {
 
     // Filtri comuni
     if (!empty($_GET['stato'])) {
-        $query .= ' AND a.stato = :stato';
+        $query .= ' AND a.stato = CAST(:stato AS stato_assegnazione)';
         $params['stato'] = $_GET['stato'];
     }
     
@@ -74,5 +74,5 @@ try {
     echo json_encode(['success' => true, 'data' => $assegnazioni]);
 } catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Errore del server.']);
+    echo json_encode(['success' => false, 'message' => 'Errore del server: ' . $e->getMessage()]);
 }
