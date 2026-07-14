@@ -1,0 +1,364 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-1234-56789abcdef0",
+		"name": "Academy API",
+		"description": "API per la gestione di corsi e percorsi formativi dell'Academy aziendale.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Mario\",\n    \"cognome\": \"Rossi\",\n    \"email\": \"mario.rossi@academy.it\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register.php",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@academy.it\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login.php",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Corsi",
+			"item": [
+				{
+					"name": "Lista Corsi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/corsi/index.php",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"corsi",
+								"index.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crea Corso",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titolo\": \"Nuovo Corso\",\n    \"descrizione\": \"Descrizione del corso\",\n    \"categoria\": \"Informatica\",\n    \"durata_ore\": 10,\n    \"obbligatorio\": 1,\n    \"attivo\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/corsi/create.php",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"corsi",
+								"create.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modifica Corso",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titolo\": \"Corso Aggiornato\",\n    \"descrizione\": \"Descrizione aggiornata\",\n    \"categoria\": \"Informatica\",\n    \"durata_ore\": 15,\n    \"obbligatorio\": 1,\n    \"attivo\": 1\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/corsi/update.php?id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"corsi",
+								"update.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Elimina Corso",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/corsi/delete.php?id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"corsi",
+								"delete.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disattiva Corso",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/corsi/disattiva.php?id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"corsi",
+								"disattiva.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Assegnazioni",
+			"item": [
+				{
+					"name": "Lista Assegnazioni",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/assegnazioni/index.php",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"assegnazioni",
+								"index.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crea Assegnazione",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"corso_id\": 1,\n    \"utente_id\": 2,\n    \"data_scadenza\": \"2024-12-31\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/assegnazioni/create.php",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"assegnazioni",
+								"create.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Completa Assegnazione",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/assegnazioni/completa.php?id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"assegnazioni",
+								"completa.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Annulla Assegnazione",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/assegnazioni/annulla.php?id=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"assegnazioni",
+								"annulla.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Statistiche",
+			"item": [
+				{
+					"name": "Statistiche Academy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/statistiche/academy.php",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"statistiche",
+								"academy.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Utenti",
+			"item": [
+				{
+					"name": "Lista Utenti",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/utenti/index.php",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"utenti",
+								"index.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost",
+			"type": "string"
+		}
+	]
+}

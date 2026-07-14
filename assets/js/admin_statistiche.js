@@ -12,9 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let url = '../api/statistiche/academy.php?';
             const mese = document.getElementById('filtro-mese').value;
             const categoria = document.getElementById('filtro-categoria').value.trim();
+            const dipendente = document.getElementById('filtro-dipendente') ? document.getElementById('filtro-dipendente').value.trim() : '';
             
             if (mese) url += `mese=${encodeURIComponent(mese)}&`;
-            if (categoria) url += `categoria=${encodeURIComponent(categoria)}`;
+            if (categoria) url += `categoria=${encodeURIComponent(categoria)}&`;
+            if (dipendente) url += `utente_id=${encodeURIComponent(dipendente)}`;
 
             const response = await api.get(url);
             statistiche = response.data || [];

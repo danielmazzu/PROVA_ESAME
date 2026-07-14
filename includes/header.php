@@ -47,6 +47,9 @@ $fullName = trim($nome . ' ' . $cognome);
                 <a href="admin_corsi.php" class="nav-link <?php echo $currentPage === 'admin_corsi' ? 'active' : ''; ?>">
                     <span class="nav-icon"><i class="ph ph-book-open"></i></span> Catalogo Corsi
                 </a>
+                <a href="admin_utenti.php" class="nav-link <?php echo $currentPage === 'admin_utenti' ? 'active' : ''; ?>">
+                    <span class="nav-icon"><i class="ph ph-user-list"></i></span> Dipendenti
+                </a>
                 <a href="admin_assegnazioni.php" class="nav-link <?php echo $currentPage === 'admin_assegnazioni' ? 'active' : ''; ?>">
                     <span class="nav-icon"><i class="ph ph-users"></i></span> Assegnazioni
                 </a>

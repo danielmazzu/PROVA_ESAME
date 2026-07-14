@@ -9,17 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadAssegnazioni() {
         try {
             tableBody.innerHTML = '<tr><td colspan="6" class="text-center">Caricamento in corso...</td></tr>';
-            
+
             let url = '../api/assegnazioni/index.php?';
             const stato = document.getElementById('filtro-stato').value;
-            const categoria = document.getElementById('filtro-categoria') ? document.getElementById('filtro-categoria').value.trim() : '';
-            const dipendente = document.getElementById('filtro-dipendente') ? document.getElementById('filtro-dipendente').value.trim() : '';
-            const corso = document.getElementById('filtro-corso') ? document.getElementById('filtro-corso').value.trim() : '';
-            
-            if (stato) url += `stato=${encodeURIComponent(stato)}&`;
-            if (categoria) url += `categoria=${encodeURIComponent(categoria)}&`;
-            if (dipendente) url += `utente_id=${encodeURIComponent(dipendente)}&`;
-            if (corso) url += `corso_id=${encodeURIComponent(corso)}`;
+
+            if (stato) url += `stato=${encodeURIComponent(stato)}`;
 
             const response = await api.get(url);
             assegnazioni = response.data || [];
@@ -52,8 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td><span class="badge ${statusClass}">${a.stato}</span></td>
                     <td>
                         <button class="btn btn-ghost btn-sm btn-edit" data-id="${a.id}" title="Modifica Scadenza"><i class="ph ph-calendar-blank"></i></button>
-                        ${a.stato !== 'Completato' && a.stato !== 'Annullato' ? 
-                            `<button class="btn btn-ghost btn-sm btn-annulla" data-id="${a.id}" title="Annulla"><i class="ph ph-x-circle"></i></button>` : ''}
+                        ${a.stato !== 'Completato' && a.stato !== 'Annullato' ?
+                    `<button class="btn btn-ghost btn-sm btn-annulla" data-id="${a.id}" title="Annulla"><i class="ph ph-x-circle"></i></button>` : ''}
                     </td>
                 </tr>
             `;
@@ -74,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', async (e) => {
                 const id = e.target.closest('button').dataset.id;
                 if (!confirm('Vuoi davvero annullare questa assegnazione?')) return;
-                
+
                 try {
                     await api.put(`../api/assegnazioni/annulla.php?id=${id}`, {});
                     showAlert(alerts, 'Assegnazione annullata.', 'success');
@@ -146,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(backdrop);
         const closeModal = () => backdrop.remove();
         backdrop.querySelectorAll('[data-dismiss="modal"]').forEach(el => el.addEventListener('click', closeModal));
-        
+
         const btnSalva = document.getElementById('btn-salva-assegnazione');
         btnSalva.addEventListener('click', async () => {
             btnSalva.disabled = true;
@@ -203,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(backdrop);
         const closeModal = () => backdrop.remove();
         backdrop.querySelectorAll('[data-dismiss="modal"]').forEach(el => el.addEventListener('click', closeModal));
-        
+
         const btnSalvaScadenza = document.getElementById('btn-salva-scadenza');
         btnSalvaScadenza.addEventListener('click', async () => {
             btnSalvaScadenza.disabled = true;

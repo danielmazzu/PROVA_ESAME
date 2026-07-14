@@ -26,6 +26,10 @@ require_once __DIR__ . '/../includes/admin_check.php';
                 <label class="form-label" for="filtro-categoria">Categoria</label>
                 <input type="text" id="filtro-categoria" class="form-input" placeholder="Es. Sicurezza">
             </div>
+            <div class="form-group">
+                <label class="form-label" for="filtro-dipendente">ID Dipendente</label>
+                <input type="number" id="filtro-dipendente" class="form-input" placeholder="Es. 2">
+            </div>
             <button type="submit" class="btn btn-primary">Filtra</button>
         </form>
     </div>
