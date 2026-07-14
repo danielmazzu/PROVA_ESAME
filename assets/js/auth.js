@@ -51,12 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = true;
             btn.textContent = 'Registrazione in corso...';
 
-            const username = document.getElementById('register-username').value.trim();
+            const nome     = document.getElementById('register-nome').value.trim();
+            const cognome  = document.getElementById('register-cognome').value.trim();
             const email    = document.getElementById('register-email').value.trim();
             const password = document.getElementById('register-password').value;
 
             try {
-                const data = await api.post('../api/auth/register.php', { username, email, password });
+                const data = await api.post('../api/auth/register.php', { nome, cognome, email, password });
 
                 showAlert('auth-alerts', data.message + ' Redirect al login...', 'success');
 
