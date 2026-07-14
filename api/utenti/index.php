@@ -31,7 +31,7 @@ try {
     
     // Seleziona solo i dipendenti (non i referenti) ordinati per cognome e nome
     // Non restituisce la password per motivi di sicurezza
-    $stmt = $pdo->query("SELECT id, nome, cognome, email FROM users WHERE role = 'dipendente' ORDER BY cognome ASC, nome ASC");
+    $stmt = $pdo->query("SELECT id, nome, cognome, email, role FROM users WHERE role = 'dipendente' ORDER BY cognome ASC, nome ASC");
     $utenti = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode(['success' => true, 'data' => $utenti]);
