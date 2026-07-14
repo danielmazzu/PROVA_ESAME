@@ -80,25 +80,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Modal per creare (simuliamo ID utente e corso fissi o input di testo, idealmente select)
-    function openModalCreate() {
+    // Modal per creare con select per dipendenti e corsi
+    async function openModalCreate() {
+        let corsiOptions = '<option value="">Seleziona un corso...</option>';
+        let utentiOptions = '<option value="">Seleziona un dipendente...</option>';
+
+        try {
+            // Fetch corsi (solo quelli attivi possibilmente, o tutti per l'admin)
+            const resCorsi = await api.get('../api/corsi/index.php');
+            if (resCorsi.data) {
+                corsiOptions += resCorsi.data.map(c => `<option value="${c.id}">${escapeHtml(c.titolo)}</option>`).join('');
+            }
+
+            // Fetch utenti (solo dipendenti)
+            const resUtenti = await api.get('../api/utenti/index.php');
+            if (resUtenti.data) {
+                utentiOptions += resUtenti.data.map(u => `<option value="${u.id}">${escapeHtml(u.cognome + ' ' + u.nome)} - ${escapeHtml(u.email)}</option>`).join('');
+            }
+        } catch (e) {
+            showAlert(alerts, 'Errore nel caricamento delle liste: ' + e.message, 'danger');
+            return; // Blocca apertura se fallisce
+        }
+
         const backdrop = document.createElement('div');
         backdrop.className = 'modal-backdrop';
         backdrop.innerHTML = `
             <div class="modal">
                 <div class="modal-header">
                     <h3>Nuova Assegnazione</h3>
-                    <button class="btn-close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="btn-close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
                     <form id="form-assegnazione">
                         <div class="form-group">
-                            <label class="form-label">ID Corso</label>
-                            <input type="number" class="form-input" id="a-corso" required>
+                            <label class="form-label">Corso</label>
+                            <select class="form-input" id="a-corso" required>
+                                ${corsiOptions}
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">ID Dipendente</label>
-                            <input type="number" class="form-input" id="a-utente" required>
+                            <label class="form-label">Dipendente</label>
+                            <select class="form-input" id="a-utente" required>
+                                ${utentiOptions}
+                            </select>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Data Scadenza</label>
@@ -107,8 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-ghost" data-dismiss="modal">Chiudi</button>
-                    <button class="btn btn-primary" id="btn-salva-assegnazione">Salva</button>
+                    <button type="button" class="btn btn-ghost" data-dismiss="modal">Chiudi</button>
+                    <button type="button" class="btn btn-primary" id="btn-salva-assegnazione">Salva</button>
                 </div>
             </div>
         `;
@@ -123,6 +147,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 utente_id: document.getElementById('a-utente').value,
                 data_scadenza: document.getElementById('a-scadenza').value
             };
+
+            if (!payload.corso_id || !payload.utente_id || !payload.data_scadenza) {
+                alert("Compila tutti i campi!");
+                return;
+            }
 
             try {
                 await api.post(`../api/assegnazioni/create.php`, payload);
