@@ -39,7 +39,6 @@ $titolo       = trim($data['titolo'] ?? '');
 $descrizione  = trim($data['descrizione'] ?? '');
 $categoria    = trim($data['categoria'] ?? '');
 $durata_ore   = (int)($data['durata_ore'] ?? 0);
-$obbligatorio = isset($data['obbligatorio']) ? (int)$data['obbligatorio'] : 0;
 $attivo       = isset($data['attivo']) ? (int)$data['attivo'] : 1;
 
 // Validazione lato server dei campi obbligatori
@@ -58,13 +57,12 @@ try {
     $pdo = getConnection();
     
     // Esegue l'UPDATE del corso con i nuovi dati
-    $stmt = $pdo->prepare('UPDATE corsi SET titolo = :titolo, descrizione = :descrizione, categoria = :categoria, durata_ore = :durata_ore, obbligatorio = :obbligatorio, attivo = :attivo WHERE id = :id');
+    $stmt = $pdo->prepare('UPDATE corsi SET titolo = :titolo, descrizione = :descrizione, categoria = :categoria, durata_ore = :durata_ore, attivo = :attivo WHERE id = :id');
     $stmt->execute([
         'titolo'       => $titolo,
         'descrizione'  => $descrizione,
         'categoria'    => $categoria,
         'durata_ore'   => $durata_ore,
-        'obbligatorio' => $obbligatorio,
         'attivo'       => $attivo,
         'id'           => $id
     ]);

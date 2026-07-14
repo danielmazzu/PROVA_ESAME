@@ -134,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 descrizione: backdrop.querySelector('#c-descrizione').value
             };
             if (corso) {
-                payload.obbligatorio = corso.obbligatorio;
                 payload.attivo = corso.attivo;
             }
 

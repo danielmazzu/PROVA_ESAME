@@ -81,7 +81,6 @@ if ($method === 'POST') {
     $descrizione  = trim($data['descrizione'] ?? '');
     $categoria    = trim($data['categoria'] ?? '');
     $durata_ore   = (int)($data['durata_ore'] ?? 0);
-    $obbligatorio = isset($data['obbligatorio']) ? (int)$data['obbligatorio'] : 0;
     $attivo       = isset($data['attivo']) ? (int)$data['attivo'] : 1;
 
     // Validazione lato server: verifica i campi obbligatori
@@ -98,13 +97,12 @@ if ($method === 'POST') {
 
     try {
         // Inserisce il nuovo corso nel database
-        $stmt = $pdo->prepare('INSERT INTO corsi (titolo, descrizione, categoria, durata_ore, obbligatorio, attivo) VALUES (:titolo, :descrizione, :categoria, :durata_ore, :obbligatorio, :attivo)');
+        $stmt = $pdo->prepare('INSERT INTO corsi (titolo, descrizione, categoria, durata_ore, attivo) VALUES (:titolo, :descrizione, :categoria, :durata_ore, :attivo)');
         $stmt->execute([
             'titolo'       => $titolo,
             'descrizione'  => $descrizione,
             'categoria'    => $categoria,
             'durata_ore'   => $durata_ore,
-            'obbligatorio' => $obbligatorio,
             'attivo'       => $attivo
         ]);
 
