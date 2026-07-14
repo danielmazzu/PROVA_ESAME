@@ -2,8 +2,6 @@
 // ============================================
 // Configurazione Database
 // ============================================
-// Modificare le costanti per il proprio ambiente.
-// ============================================
 
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'temeplate');
@@ -22,7 +20,27 @@ function getConnection(): PDO
     static $pdo = null;
 
     if ($pdo === null) {
-        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+        $dsn = "";
+        $user = DB_USER;
+        $pass = DB_PASS;
+
+        // Se siamo su Railway/Supabase, usiamo l'URL di connessione PostgreSQL
+        $dbUrl = getenv('DATABASE_URL');
+        
+        if ($dbUrl) {
+            // Parsing url: postgres://user:password@host:port/dbname
+            $parsedUrl = parse_url($dbUrl);
+            $host = $parsedUrl['host'];
+            $port = $parsedUrl['port'] ?? 5432;
+            $user = $parsedUrl['user'];
+            $pass = $parsedUrl['pass'];
+            $dbName = ltrim($parsedUrl['path'], '/');
+            
+            $dsn = "pgsql:host={$host};port={$port};dbname={$dbName}";
+        } else {
+            // Fallback: MySQL locale
+            $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+        }
 
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
@@ -31,10 +49,10 @@ function getConnection(): PDO
         ];
 
         try {
-            $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
+            $pdo = new PDO($dsn, $user, $pass, $options);
         } catch (PDOException $e) {
             http_response_code(500);
-            echo json_encode(['success' => false, 'message' => 'Errore di connessione al database.']);
+            echo json_encode(['success' => false, 'message' => 'Errore di connessione al database.', 'details' => $e->getMessage()]);
             exit;
         }
     }

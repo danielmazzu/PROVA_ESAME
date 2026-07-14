@@ -14,7 +14,7 @@ $totCorsiCompletati = 0;
 $totCorsiScaduti = 0;
 
 if ($role === 'dipendente') {
-    $stmt = $pdo->prepare("SELECT COUNT(*) as total, SUM(IF(stato = 'Completato', 1, 0)) as completati, SUM(IF(stato = 'Scaduto', 1, 0)) as scaduti FROM assegnazioni WHERE utente_id = :user_id");
+    $stmt = $pdo->prepare("SELECT COUNT(*) as total, SUM(CASE WHEN stato = 'Completato' THEN 1 ELSE 0 END) as completati, SUM(CASE WHEN stato = 'Scaduto' THEN 1 ELSE 0 END) as scaduti FROM assegnazioni WHERE utente_id = :user_id");
     $stmt->execute(['user_id' => $userId]);
     $stats = $stmt->fetch();
     $totCorsiAssegnati = (int)($stats['total'] ?? 0);

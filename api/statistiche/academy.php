@@ -26,10 +26,10 @@ try {
     
     $query = "
         SELECT 
-            DATE_FORMAT(a.data_assegnazione, '%Y-%m') as mese,
+            TO_CHAR(a.data_assegnazione, 'YYYY-MM') as mese,
             c.categoria as categoria,
             COUNT(a.id) as numeroAssegnazioni,
-            SUM(IF(a.stato = 'Completato', 1, 0)) as numeroCompletamenti
+            SUM(CASE WHEN a.stato = 'Completato' THEN 1 ELSE 0 END) as numeroCompletamenti
         FROM assegnazioni a
         JOIN corsi c ON a.corso_id = c.id
         WHERE 1=1
@@ -38,7 +38,7 @@ try {
     $params = [];
 
     if (!empty($_GET['mese'])) {
-        $query .= " AND DATE_FORMAT(a.data_assegnazione, '%Y-%m') = :mese";
+        $query .= " AND TO_CHAR(a.data_assegnazione, 'YYYY-MM') = :mese";
         $params['mese'] = $_GET['mese'];
     }
 
