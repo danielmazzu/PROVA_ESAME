@@ -12,8 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
             
             let url = '../api/assegnazioni/index.php?';
             const stato = document.getElementById('filtro-stato').value;
+            const categoria = document.getElementById('filtro-categoria') ? document.getElementById('filtro-categoria').value.trim() : '';
+            const dipendente = document.getElementById('filtro-dipendente') ? document.getElementById('filtro-dipendente').value.trim() : '';
+            const corso = document.getElementById('filtro-corso') ? document.getElementById('filtro-corso').value.trim() : '';
             
-            if (stato) url += `stato=${encodeURIComponent(stato)}`;
+            if (stato) url += `stato=${encodeURIComponent(stato)}&`;
+            if (categoria) url += `categoria=${encodeURIComponent(categoria)}&`;
+            if (dipendente) url += `utente_id=${encodeURIComponent(dipendente)}&`;
+            if (corso) url += `corso_id=${encodeURIComponent(corso)}`;
 
             const response = await api.get(url);
             assegnazioni = response.data || [];

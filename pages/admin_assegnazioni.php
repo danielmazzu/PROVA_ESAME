@@ -29,7 +29,19 @@ require_once __DIR__ . '/../includes/admin_check.php';
                     <option value="Annullato">Annullato</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Filtra</button>
+            <div class="form-group">
+                <label class="form-label" for="filtro-categoria">Categoria</label>
+                <input type="text" id="filtro-categoria" class="form-input" placeholder="Es. Sicurezza">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="filtro-dipendente">ID Dipendente</label>
+                <input type="number" id="filtro-dipendente" class="form-input" placeholder="Es. 2">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="filtro-corso">ID Corso</label>
+                <input type="number" id="filtro-corso" class="form-input" placeholder="Es. 1">
+            </div>
+            <button type="submit" class="btn btn-primary" style="align-self: flex-end;">Filtra</button>
         </form>
     </div>
 </div>
