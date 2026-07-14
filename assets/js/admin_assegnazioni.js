@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.innerHTML = assegnazioni.map(a => {
             const dateScadenza = new Date(a.data_scadenza).toLocaleDateString('it-IT');
             let statusClass = 'badge-primary';
-            if (a.stato === 'Completato') statusClass = 'badge-success';
+            if (a.stato === 'Completato') statusClass = 'badge-info';
             if (a.stato === 'Scaduto') statusClass = 'badge-danger';
             if (a.stato === 'Annullato') statusClass = 'badge-warning';
 

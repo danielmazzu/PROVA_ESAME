@@ -45,8 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const canComplete = a.stato === 'Assegnato';
 
         let statusClass = 'badge-primary';
-        if (isCompletato) statusClass = 'badge-success';
-        if (isScaduto) statusClass = 'badge-danger';
+        if (isCompletato) statusClass = 'badge-info';
+        if (a.stato === 'Scaduto') statusClass = 'badge-danger';
         if (a.stato === 'Annullato') statusClass = 'badge-warning';
 
         return `
