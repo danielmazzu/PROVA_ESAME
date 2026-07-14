@@ -249,7 +249,7 @@ img {
     transition: all var(--transition-base);
     text-decoration: none;
     border: 1px solid transparent;
-    white-space: nowrap;
+    white-space: nowrap !important;
 }
 
 .nav-link:hover {
@@ -300,6 +300,7 @@ img {
     font-weight: 500;
     font-size: var(--font-size-sm);
     color: var(--text-primary);
+    white-space: nowrap !important;
 }
 
 .user-badge {
