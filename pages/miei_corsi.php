@@ -14,7 +14,7 @@ if ($_SESSION['role'] !== 'dipendente') {
 
 <div class="page-header flex-between">
     <div>
-        <h1>📚 I Miei Corsi</h1>
+        <h1><i class="ph ph-books"></i> I Miei Corsi</h1>
         <p>Consulta e completa i percorsi formativi a te assegnati.</p>
     </div>
 </div>
@@ -47,7 +47,7 @@ if ($_SESSION['role'] !== 'dipendente') {
 </div>
 
 <div id="empty-state" class="empty-state hidden">
-    <div class="empty-icon">📂</div>
+    <div class="empty-icon"><i class="ph ph-folder-open"></i></div>
     <h3>Nessun corso trovato</h3>
     <p>Non ci sono corsi che corrispondono ai criteri di ricerca.</p>
 </div>

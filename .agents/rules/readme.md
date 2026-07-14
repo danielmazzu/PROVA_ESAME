@@ -44,3 +44,7 @@ Oltre alle regole di base, per questa specifica tipologia di applicazione devono
 8. **Documentazione API e Dati di Test**:
    - Mantenere chiara la struttura degli endpoint API. Strumenti come Swagger/OpenAPI o collection esportate (Postman, Insomnia) sono incoraggiati.
    - Il database deve prevedere script di popolamento (seeding) con dati realistici, necessari per testare tutti i casi d'uso, le ricerche e le statistiche previste dai requisiti.
+
+9. **GITH**:
+- FARE COMM
+

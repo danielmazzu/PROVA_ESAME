@@ -21,6 +21,7 @@ $fullName = trim($nome . ' ' . $cognome);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -28,29 +29,29 @@ $fullName = trim($nome . ' ' . $cognome);
     <nav class="navbar">
         <div class="navbar-container">
             <a href="dashboard.php" class="navbar-brand">
-                <span class="brand-icon">🎓</span>
+                <span class="brand-icon"><i class="ph ph-graduation-cap"></i></span>
                 Academy Aziendale
             </a>
             <div class="navbar-menu">
                 <a href="dashboard.php" class="nav-link <?php echo $currentPage === 'dashboard' ? 'active' : ''; ?>">
-                    <span class="nav-icon">📊</span> Dashboard
+                    <span class="nav-icon"><i class="ph ph-chart-pie-slice"></i></span> Dashboard
                 </a>
                 
                 <?php if ($isDipendente): ?>
                 <a href="miei_corsi.php" class="nav-link <?php echo $currentPage === 'miei_corsi' ? 'active' : ''; ?>">
-                    <span class="nav-icon">📚</span> I Miei Corsi
+                    <span class="nav-icon"><i class="ph ph-books"></i></span> I Miei Corsi
                 </a>
                 <?php endif; ?>
 
                 <?php if ($isReferente): ?>
                 <a href="admin_corsi.php" class="nav-link <?php echo $currentPage === 'admin_corsi' ? 'active' : ''; ?>">
-                    <span class="nav-icon">📖</span> Catalogo Corsi
+                    <span class="nav-icon"><i class="ph ph-book-open"></i></span> Catalogo Corsi
                 </a>
                 <a href="admin_assegnazioni.php" class="nav-link <?php echo $currentPage === 'admin_assegnazioni' ? 'active' : ''; ?>">
-                    <span class="nav-icon">👥</span> Assegnazioni
+                    <span class="nav-icon"><i class="ph ph-users"></i></span> Assegnazioni
                 </a>
                 <a href="admin_statistiche.php" class="nav-link <?php echo $currentPage === 'admin_statistiche' ? 'active' : ''; ?>">
-                    <span class="nav-icon">📈</span> Statistiche
+                    <span class="nav-icon"><i class="ph ph-trend-up"></i></span> Statistiche
                 </a>
                 <?php endif; ?>
             </div>

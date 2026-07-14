@@ -45,9 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${dateScadenza}</td>
                     <td><span class="badge ${statusClass}">${a.stato}</span></td>
                     <td>
-                        <button class="btn btn-ghost btn-sm btn-edit" data-id="${a.id}" title="Modifica Scadenza">✏️</button>
+                        <button class="btn btn-ghost btn-sm btn-edit" data-id="${a.id}" title="Modifica Scadenza"><i class="ph ph-calendar-blank"></i></button>
                         ${a.stato !== 'Completato' && a.stato !== 'Annullato' ? 
-                            `<button class="btn btn-ghost btn-sm btn-annulla" data-id="${a.id}" title="Annulla">🚫</button>` : ''}
+                            `<button class="btn btn-ghost btn-sm btn-annulla" data-id="${a.id}" title="Annulla"><i class="ph ph-x-circle"></i></button>` : ''}
                     </td>
                 </tr>
             `;

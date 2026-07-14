@@ -8,7 +8,7 @@ require_once __DIR__ . '/../includes/admin_check.php';
 
 <div class="page-header flex-between">
     <div>
-        <h1>👥 Gestione Assegnazioni</h1>
+        <h1><i class="ph ph-users"></i> Gestione Assegnazioni</h1>
         <p>Assegna corsi ai dipendenti e monitora il loro stato.</p>
     </div>
     <button class="btn btn-primary" id="btn-nuova-assegnazione">+ Nuova Assegnazione</button>

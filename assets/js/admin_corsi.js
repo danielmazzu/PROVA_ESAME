@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${c.durata_ore}</td>
                     <td><span class="badge ${isAttivo ? 'badge-success' : 'badge-danger'}">${isAttivo ? 'Attivo' : 'Disattivato'}</span></td>
                     <td>
-                        <button class="btn btn-ghost btn-sm btn-edit" data-id="${c.id}" title="Modifica">✏️</button>
+                        <button class="btn btn-ghost btn-sm btn-edit" data-id="${c.id}" title="Modifica"><i class="ph ph-pencil-simple"></i></button>
                         <button class="btn btn-ghost btn-sm btn-toggle" data-id="${c.id}" title="${isAttivo ? 'Disattiva' : 'Attiva'}">
-                            ${isAttivo ? '🚫' : '✅'}
+                            ${isAttivo ? '<i class="ph ph-prohibit"></i>' : '<i class="ph ph-check-circle"></i>'}
                         </button>
                     </td>
                 </tr>

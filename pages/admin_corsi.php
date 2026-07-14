@@ -8,7 +8,7 @@ require_once __DIR__ . '/../includes/admin_check.php'; // Adattato per controlla
 
 <div class="page-header flex-between">
     <div>
-        <h1>📖 Catalogo Corsi</h1>
+        <h1><i class="ph ph-book-open"></i> Catalogo Corsi</h1>
         <p>Gestisci i corsi formativi dell'Academy.</p>
     </div>
     <button class="btn btn-primary" id="btn-nuovo-corso">+ Nuovo Corso</button>

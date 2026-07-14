@@ -8,7 +8,7 @@ require_once __DIR__ . '/../includes/admin_check.php';
 
 <div class="page-header flex-between">
     <div>
-        <h1>📈 Statistiche Academy</h1>
+        <h1><i class="ph ph-trend-up"></i> Statistiche Academy</h1>
         <p>Visualizza l'andamento delle formazioni.</p>
     </div>
 </div>
