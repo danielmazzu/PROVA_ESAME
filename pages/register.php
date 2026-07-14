@@ -22,18 +22,18 @@ if ($isLoggedIn) {
 
         <form id="form-register">
             <div class="form-group">
-                <label class="form-label" for="register-username">👤 Username</label>
+                <label class="form-label" for="register-username"><i class="ph ph-user"></i> Username</label>
                 <input type="text" class="form-input" id="register-username" 
                        placeholder="Scegli un username" required minlength="3" autocomplete="username">
                 <small class="text-muted" style="display:block; margin-top:6px; font-size:12px;">Min. 3 caratteri</small>
             </div>
             <div class="form-group">
-                <label class="form-label" for="register-email">📧 Email</label>
+                <label class="form-label" for="register-email"><i class="ph ph-envelope-simple"></i> Email</label>
                 <input type="email" class="form-input" id="register-email" 
                        placeholder="Inserisci la tua email" required autocomplete="email">
             </div>
             <div class="form-group">
-                <label class="form-label" for="register-password">🔒 Password</label>
+                <label class="form-label" for="register-password"><i class="ph ph-lock-key"></i> Password</label>
                 <input type="password" class="form-input" id="register-password" 
                        placeholder="Scegli una password" required minlength="6" autocomplete="new-password">
                 <small class="text-muted" style="display:block; margin-top:6px; font-size:12px;">Min. 6 caratteri</small>
