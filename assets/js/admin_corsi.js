@@ -133,6 +133,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 durata_ore: backdrop.querySelector('#c-durata').value,
                 descrizione: backdrop.querySelector('#c-descrizione').value
             };
+            if (corso) {
+                payload.obbligatorio = corso.obbligatorio;
+                payload.attivo = corso.attivo;
+            }
 
             try {
                 if (corso) {
