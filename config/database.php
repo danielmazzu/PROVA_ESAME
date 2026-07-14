@@ -32,8 +32,8 @@ function getConnection(): PDO
             $parsedUrl = parse_url($dbUrl);
             $host = $parsedUrl['host'];
             $port = $parsedUrl['port'] ?? 5432;
-            $user = $parsedUrl['user'];
-            $pass = $parsedUrl['pass'];
+            $user = urldecode($parsedUrl['user'] ?? '');
+            $pass = urldecode($parsedUrl['pass'] ?? '');
             $dbName = ltrim($parsedUrl['path'], '/');
             
             $dsn = "pgsql:host={$host};port={$port};dbname={$dbName}";
