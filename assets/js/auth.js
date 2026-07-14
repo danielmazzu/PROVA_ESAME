@@ -16,11 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = true;
             btn.textContent = 'Accesso in corso...';
 
-            const username = document.getElementById('login-username').value.trim();
+            const email = document.getElementById('login-email').value.trim();
             const password = document.getElementById('login-password').value;
 
             try {
-                const data = await api.post('../api/auth/login.php', { username, password });
+                const data = await api.post('../api/auth/login.php', { email, password });
 
                 showAlert('auth-alerts', data.message, 'success');
 

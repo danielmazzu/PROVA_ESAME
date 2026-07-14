@@ -22,12 +22,12 @@ if ($isLoggedIn) {
 
         <form id="form-login">
             <div class="form-group">
-                <label class="form-label" for="login-username">👤 Username</label>
-                <input type="text" class="form-input" id="login-username" 
-                       placeholder="Inserisci il tuo username" required autocomplete="username">
+                <label class="form-label" for="login-email"><i class="ph ph-envelope-simple"></i> Email</label>
+                <input type="email" class="form-input" id="login-email" 
+                       placeholder="Inserisci la tua email" required autocomplete="email">
             </div>
             <div class="form-group">
-                <label class="form-label" for="login-password">🔒 Password</label>
+                <label class="form-label" for="login-password"><i class="ph ph-lock-key"></i> Password</label>
                 <input type="password" class="form-input" id="login-password" 
                        placeholder="Inserisci la password" required autocomplete="current-password">
             </div>
