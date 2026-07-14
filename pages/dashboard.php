@@ -14,12 +14,17 @@ $totCorsiCompletati = 0;
 $totCorsiScaduti = 0;
 
 if ($role === 'dipendente') {
-    $stmt = $pdo->prepare("SELECT COUNT(*) as total, SUM(CASE WHEN stato = 'Completato' THEN 1 ELSE 0 END) as completati, SUM(CASE WHEN stato = 'Scaduto' THEN 1 ELSE 0 END) as scaduti FROM assegnazioni WHERE utente_id = :user_id");
+    $stmt = $pdo->prepare("SELECT COUNT(*) as total, 
+                           SUM(CASE WHEN stato = 'Completato' THEN 1 ELSE 0 END) as completati, 
+                           SUM(CASE WHEN stato = 'Scaduto' THEN 1 ELSE 0 END) as scaduti,
+                           SUM(CASE WHEN stato = 'Assegnato' THEN 1 ELSE 0 END) as attivi
+                           FROM assegnazioni WHERE utente_id = :user_id");
     $stmt->execute(['user_id' => $userId]);
     $stats = $stmt->fetch();
     $totCorsiAssegnati = (int)($stats['total'] ?? 0);
     $totCorsiCompletati = (int)($stats['completati'] ?? 0);
     $totCorsiScaduti = (int)($stats['scaduti'] ?? 0);
+    $totCorsiAttivi = (int)($stats['attivi'] ?? 0);
 }
 
 // Statistiche Referente
@@ -63,7 +68,7 @@ else $greeting = 'Buonasera';
         </div>
         <div class="stat-card">
             <div class="stat-icon warning"><i class="ph ph-hourglass-high"></i></div>
-            <div class="stat-value"><?php echo $totCorsiAssegnati - $totCorsiCompletati; ?></div>
+            <div class="stat-value"><?php echo $totCorsiAttivi; ?></div>
             <div class="stat-label">Da Completare</div>
         </div>
     <?php elseif ($role === 'referente'): ?>
